@@ -1,0 +1,319 @@
+<ion-header class="cf-header">
+  <app-brand-header
+    title="Report Details"
+    [showBack]="true"
+    defaultHref="/my-reports"
+    [showBrandLogo]="false"
+  ></app-brand-header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="cf-page-container details-container">
+    @if (isLoading) {
+      <div class="cf-state-box">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p class="cf-supporting-text">Loading report details...</p>
+      </div>
+    } @else if (loadError) {
+      <div class="cf-banner cf-banner-error" role="alert">
+        <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+        <span>{{ loadError }}</span>
+      </div>
+    } @else if (!report) {
+      <section class="cf-card cf-state-box" aria-label="Report not found">
+        <div class="cf-state-icon">
+          <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <h1 class="cf-section-heading">Report not found</h1>
+        <p class="cf-supporting-text">
+          This report could not be found. It may have been removed or the link
+          is invalid.
+        </p>
+        <div class="cf-stack-md cf-full-width">
+          <ion-button
+            expand="block"
+            class="cf-btn cf-btn-primary"
+            routerLink="/my-reports"
+          >
+            Go to My Reports
+          </ion-button>
+          <ion-button
+            expand="block"
+            class="cf-btn cf-btn-outline"
+            routerLink="/home"
+          >
+            Back to Home
+          </ion-button>
+        </div>
+      </section>
+    } @else {
+      <div class="cf-row-between">
+        <div class="ticket-left">
+          <span class="cf-badge cf-badge-local">Ticket {{ report.ticketCode }}</span>
+          <span class="cf-supporting-text">• Dorm &amp; Academic Area</span>
+        </div>
+        <div class="ticket-actions">
+          <button
+            type="button"
+            class="cf-icon-btn"
+            aria-label="Share report"
+            (click)="onStaticPrototypeAction('Ticket link copied to clipboard.')"
+          >
+            <ion-icon name="share-social-outline" aria-hidden="true"></ion-icon>
+          </button>
+          <button
+            type="button"
+            class="cf-icon-btn"
+            aria-label="More options"
+            (click)="onStaticPrototypeAction('Ticket options menu.')"
+          >
+            <ion-icon name="ellipsis-vertical-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <section class="cf-card cf-stack-md" aria-label="Report summary">
+        <div class="cf-row-between">
+          <h1 class="cf-section-heading summary-title">{{ report.title }}</h1>
+          <span
+            class="cf-badge"
+            [class.cf-badge-pending]="report.status === 'Draft'"
+            [class.cf-badge-local]="report.status !== 'Draft'"
+          >
+            {{ report.status === 'Draft' ? 'Pending' : 'In Progress' }}
+          </span>
+        </div>
+
+        <div class="cf-stack-xs">
+          <span class="cf-meta-line">
+            <ion-icon [name]="categoryIcon(report.category)" aria-hidden="true"></ion-icon>
+            <span>Campus Facilities — {{ report.category }} Dept.</span>
+          </span>
+          <span class="cf-meta-line">
+            <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+            <span>Submitted {{ report.createdAt | date: 'medium' }} by Maya Patel</span>
+          </span>
+        </div>
+      </section>
+
+      <section class="cf-card cf-stack-md" aria-label="Resolution progress">
+        <div class="cf-row-between">
+          <h2 class="cf-card-heading">Resolution Progress</h2>
+          <span class="cf-badge cf-badge-local">Live Updates</span>
+        </div>
+
+        <div class="cf-stack-md">
+          <div class="timeline-step is-done">
+            <span class="step-dot" aria-hidden="true">
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </span>
+            <div class="cf-stack-xs step-body">
+              <div class="cf-row-between step-head">
+                <strong>Report Received</strong>
+                <span class="step-time">{{ report.createdAt | date: 'shortTime' }}</span>
+              </div>
+              <p class="cf-supporting-text">
+                Logged into dispatch queue via mobile intake.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-step is-done">
+            <span class="step-dot" aria-hidden="true">
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </span>
+            <div class="cf-stack-xs step-body">
+              <div class="cf-row-between step-head">
+                <strong>Assigned &amp; Dispatched</strong>
+                <span class="step-time">Dispatched</span>
+              </div>
+              <p class="cf-supporting-text">
+                {{ report.category }} Work Order routed to North Zone maintenance team.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-step is-pending">
+            <span class="step-dot" aria-hidden="true">
+              <ion-icon name="construct-outline"></ion-icon>
+            </span>
+            <div class="cf-stack-xs step-body">
+              <div class="cf-row-between step-head">
+                <strong>Technician On-Site</strong>
+                <span class="step-time">Active</span>
+              </div>
+              <p class="cf-supporting-text">
+                Dave M. is actively inspecting the reported facility issue.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <span class="step-dot" aria-hidden="true">
+              <ion-icon name="hourglass-outline"></ion-icon>
+            </span>
+            <div class="cf-stack-xs step-body">
+              <div class="cf-row-between step-head">
+                <strong>Resolved &amp; Closed</strong>
+                <span class="step-time">Est. today 4:00 PM</span>
+              </div>
+              <p class="cf-supporting-text">
+                Verification of repair completion and area inspection.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cf-card cf-stack-md" aria-label="Incident details">
+        <h2 class="cf-card-heading">Incident Details</h2>
+
+        <div class="incident-box">
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          <div>
+            <span class="box-label">LOCATION</span>
+            <strong>{{ report.location }}</strong>
+          </div>
+        </div>
+
+        <div class="incident-grid">
+          <div class="incident-box">
+            <ion-icon [name]="categoryIcon(report.category)" aria-hidden="true"></ion-icon>
+            <div>
+              <span class="box-label">CATEGORY</span>
+              <strong>{{ report.category }}</strong>
+            </div>
+          </div>
+
+          <div class="incident-box">
+            <ion-icon name="flag-outline" aria-hidden="true"></ion-icon>
+            <div>
+              <span class="box-label">PRIORITY</span>
+              <strong>{{ report.urgency }}</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cf-card cf-stack-md" aria-label="Report description and photo">
+        <div class="cf-row-between">
+          <h2 class="cf-card-heading">Report Description</h2>
+          <span class="cf-supporting-text">
+            {{ report.photoPath ? '1 Attachment' : 'No Attachment' }}
+          </span>
+        </div>
+
+        <p class="cf-body-text description-text">{{ report.description }}</p>
+
+        @if (photoUrl) {
+          <div class="photo-wrap">
+            <img
+              [src]="photoUrl"
+              alt="Photo of campus maintenance issue"
+              class="detail-photo"
+              (error)="onPhotoLoadError()"
+            />
+            <span class="photo-date-pill">
+              <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
+              {{ report.createdAt | date: 'MMM d • h:mm a' }}
+            </span>
+            <button
+              type="button"
+              class="view-full-btn"
+              (click)="setPhotoViewerOpen(true)"
+            >
+              <ion-icon name="expand-outline" aria-hidden="true"></ion-icon>
+              <span>View Full</span>
+            </button>
+          </div>
+        } @else if (photoUnavailable) {
+          <div class="cf-banner cf-banner-warning" role="status">
+            <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+            <span>
+              The attached photo file is unavailable or could not be loaded.
+              All text details remain intact.
+            </span>
+          </div>
+        } @else {
+          <p class="cf-supporting-text">No photo was attached to this report.</p>
+        }
+      </section>
+
+      <section class="cf-card cf-stack-md" aria-label="Official updates">
+        <div class="cf-row-between">
+          <h2 class="cf-card-heading">Official Updates</h2>
+          <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
+        </div>
+
+        <div class="updates-placeholder">
+          <strong>Dave M. • Lead Technician</strong>
+          <p class="cf-supporting-text">
+            "Inspected the reported location and isolated the affected fixture.
+            Replacement parts are being installed now."
+          </p>
+        </div>
+      </section>
+
+      <div class="cf-stack-sm">
+        <ion-button
+          type="button"
+          expand="block"
+          class="cf-btn cf-btn-primary"
+          data-testid="edit-report-btn"
+          (click)="onEditReport()"
+        >
+          <ion-icon slot="start" name="create-outline" aria-hidden="true"></ion-icon>
+          Edit Report
+        </ion-button>
+
+        <ion-button
+          type="button"
+          expand="block"
+          class="cf-btn cf-btn-outline"
+          (click)="onStaticPrototypeAction('Additional notes will be attached to this maintenance ticket.')"
+        >
+          <ion-icon slot="start" name="camera-outline" aria-hidden="true"></ion-icon>
+          Add Additional Note / Photo
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          fill="clear"
+          color="danger"
+          class="back-reports-link"
+          data-testid="cancel-report-btn"
+          [disabled]="isDeleting"
+          (click)="onCancelReport()"
+        >
+          {{ isDeleting ? 'Cancelling...' : 'Cancel Report' }}
+        </ion-button>
+      </div>
+    }
+  </div>
+
+  <ion-modal [isOpen]="isPhotoViewerOpen" (didDismiss)="setPhotoViewerOpen(false)">
+    <ng-template>
+      <ion-header class="cf-header">
+        <ion-toolbar>
+          <ion-title>Attached Photo</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setPhotoViewerOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        @if (photoUrl) {
+          <img
+            [src]="photoUrl"
+            alt="Full preview of maintenance issue"
+            class="modal-full-photo"
+          />
+        }
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<ion-footer class="cf-footer-nav">
+  <app-bottom-nav></app-bottom-nav>
+</ion-footer>

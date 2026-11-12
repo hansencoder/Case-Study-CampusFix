@@ -1,0 +1,62 @@
+.cf-brand-toolbar {
+  --background: var(--cf-surface);
+  --min-height: 56px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.brand-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.brand-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-back-btn {
+  margin-left: -8px;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-family: var(--cf-font-heading);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--cf-text-main);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--cf-radius-pill);
+  background: var(--cf-color-secondary);
+  border: 1px solid var(--cf-border);
+  color: var(--cf-color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cf-font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+

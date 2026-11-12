@@ -1,0 +1,63 @@
+.cf-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 64px;
+  padding: 6px var(--cf-space-3) calc(6px + env(safe-area-inset-bottom));
+  background: var(--cf-surface);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.cf-nav-item {
+  flex: 1;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--cf-text-secondary);
+  border-radius: var(--cf-radius-md);
+  transition: color 140ms ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--cf-color-primary);
+    outline-offset: -2px;
+  }
+}
+
+.cf-nav-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 28px;
+  border-radius: var(--cf-radius-pill);
+  transition: background-color 140ms ease;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.cf-nav-label {
+  font-family: var(--cf-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.cf-nav-item.is-active {
+  color: var(--cf-color-primary);
+
+  .cf-nav-icon-wrap {
+    background: rgba(195, 204, 213, 0.42);
+  }
+
+  .cf-nav-label {
+    font-weight: 600;
+  }
+}
+

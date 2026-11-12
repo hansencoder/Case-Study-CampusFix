@@ -1,20 +1,219 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+<ion-header class="cf-header">
+  <app-brand-header title="CampusFix"></app-brand-header>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="cf-page-container home-container">
+    <section class="cf-row-between" aria-label="Student greeting">
+      <div class="cf-stack-xs">
+        <h1 class="greeting-title">Welcome back, Maya 👋</h1>
+        <p class="cf-meta-line">
+          <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          <span>North Campus • Engineering Quad</span>
+        </p>
+      </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <button
+        type="button"
+        class="cf-icon-btn bell-btn"
+        aria-label="Notifications"
+        (click)="onStaticFeatureTap('You are all caught up on campus maintenance updates.')"
+      >
+        <ion-icon name="notifications-outline" aria-hidden="true"></ion-icon>
+        <span class="bell-dot" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <section class="cf-card cf-stack-lg">
+      <div class="cf-row-between">
+        <span class="cf-badge cf-badge-local">
+          <ion-icon name="flash-outline" aria-hidden="true"></ion-icon>
+          Instant Dispatch
+        </span>
+        <span class="cf-icon-circle" aria-hidden="true">
+          <ion-icon name="construct-outline"></ion-icon>
+        </span>
+      </div>
+
+      <div class="cf-stack-xs">
+        <h2 class="cf-section-heading">Have an issue on campus?</h2>
+        <p class="cf-supporting-text">
+          Quick 60-second submission for dorms, labs, and communal facilities.
+        </p>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="cf-btn cf-btn-primary"
+        routerLink="/create-report"
+        data-testid="create-report-btn"
+      >
+        <ion-icon slot="start" name="add-circle-outline" aria-hidden="true"></ion-icon>
+        Report an Issue
+      </ion-button>
+    </section>
+
+    <section class="cf-stack-md" aria-labelledby="overview-heading">
+      <div class="cf-row-between">
+        <h2 id="overview-heading" class="overview-label">STATUS OVERVIEW</h2>
+        <span class="cf-meta-line overview-meta">
+          <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+          Live updates
+        </span>
+      </div>
+
+      <div class="overview-grid">
+        <div class="stat-tile stat-tile-primary">
+          <div class="cf-row-between stat-tile-top">
+            <span>Active</span>
+            <ion-icon name="clipboard-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div class="stat-tile-bottom">
+            <span class="stat-num">{{ savedCount }}</span>
+            <span class="stat-unit">open</span>
+          </div>
+        </div>
+
+        <div class="stat-tile">
+          <div class="cf-row-between stat-tile-top">
+            <span>In Progress</span>
+            <ion-icon name="image-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div class="stat-tile-bottom">
+            <span class="stat-num">{{ withPhotoCount }}</span>
+            <span class="stat-unit">assigned</span>
+          </div>
+        </div>
+
+        <div class="stat-tile">
+          <div class="cf-row-between stat-tile-top">
+            <span>Urgent</span>
+            <ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div class="stat-tile-bottom">
+            <span class="stat-num">{{ urgentCount }}</span>
+            <span class="stat-unit">priority</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cf-stack-md" aria-labelledby="recent-heading">
+      <div class="cf-row-between">
+        <h2 id="recent-heading" class="cf-section-heading">Recent Reports</h2>
+        <a
+          routerLink="/my-reports"
+          class="view-all-link"
+          data-testid="my-reports-btn"
+        >
+          <span>View all</span>
+          <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
+      </div>
+
+      @if (recentReports.length === 0) {
+        <div class="cf-card">
+          <p class="cf-supporting-text">
+            No maintenance reports submitted yet. Tap <strong>Report an Issue</strong>
+            above to report a campus facility problem.
+          </p>
+        </div>
+      } @else {
+        <div class="cf-stack-md">
+          @for (item of recentReports; track item.report.id) {
+            <a
+              [routerLink]="['/report-details', item.report.id]"
+              class="cf-card cf-card-clickable cf-card-link"
+              data-testid="recent-report-item"
+            >
+              <div class="cf-row-between">
+                <span class="cf-meta-line">
+                  <span class="cf-icon-circle" aria-hidden="true">
+                    <ion-icon [name]="categoryIcon(item.report.category)"></ion-icon>
+                  </span>
+                  <span class="cat-name">{{ item.report.category }}</span>
+                </span>
+
+                <span
+                  class="cf-badge"
+                  [class.cf-badge-pending]="item.report.status === 'Draft'"
+                  [class.cf-badge-local]="item.report.status !== 'Draft'"
+                >
+                  {{ item.report.status === 'Draft' ? 'Pending' : 'In Progress' }}
+                </span>
+              </div>
+
+              <h3 class="cf-card-heading">{{ item.report.title }}</h3>
+
+              <div class="cf-meta-line">
+                <ion-icon name="business-outline" aria-hidden="true"></ion-icon>
+                <span>{{ item.report.location }}</span>
+              </div>
+
+              @if (item.thumbnailUrl) {
+                <div class="thumb-note-row">
+                  <img
+                    [src]="item.thumbnailUrl"
+                    alt="Thumbnail for {{ item.report.title }}"
+                    class="recent-thumb"
+                  />
+                  <div class="cf-stack-xs">
+                    <strong class="cf-small-heading">Assigned: Tech Dave M.</strong>
+                    <span class="cf-supporting-text">{{ item.report.ticketCode }} • {{ item.report.urgency }} priority</span>
+                  </div>
+                </div>
+              }
+
+              <div class="cf-card-footer">
+                <span class="cf-meta-line">
+                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                  <span>Submitted {{ item.report.createdAt | date: 'mediumDate' }}</span>
+                </span>
+                <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+              </div>
+            </a>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="cf-card cf-stack-md" aria-label="Emergency maintenance notice">
+      <div class="emergency-top">
+        <span class="cf-icon-circle is-warning" aria-hidden="true">
+          <ion-icon name="shield-outline"></ion-icon>
+        </span>
+        <div class="cf-stack-xs">
+          <h2 class="cf-card-heading">Emergency Maintenance Notice</h2>
+          <p class="cf-supporting-text">
+            For dangerous electrical sparks, major flooding, or gas odor, bypass
+            app tickets and call direct dispatch.
+          </p>
+        </div>
+      </div>
+
+      <div class="cf-row-between emergency-desk-box">
+        <div>
+          <span class="desk-label">24/7 Operations Desk</span>
+          <strong class="desk-phone">(555) 019-4321</strong>
+        </div>
+        <button
+          type="button"
+          class="call-now-btn"
+          (click)="onStaticFeatureTap('24/7 Operations Desk: (555) 019-4321')"
+        >
+          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+          <span>Call Now</span>
+        </button>
+      </div>
+
+      <p class="cf-meta-line overview-meta">
+        <ion-icon name="information-circle-outline" aria-hidden="true"></ion-icon>
+        <span>Standard facility response SLA: within 4 business hours</span>
+      </p>
+    </section>
   </div>
 </ion-content>
+
+<ion-footer class="cf-footer-nav">
+  <app-bottom-nav></app-bottom-nav>
+</ion-footer>

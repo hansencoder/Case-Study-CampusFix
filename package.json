@@ -1,6 +1,6 @@
 {
-  "name": "case-study",
-  "version": "0.0.1",
+  "name": "campusfix",
+  "version": "1.0.0",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -20,7 +20,15 @@
     "@angular/platform-browser": "22.2.5",
     "@angular/platform-browser-dynamic": "22.2.5",
     "@angular/router": "22.2.5",
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/camera": "^8.2.6",
+    "@capacitor/core": "^8.6.0",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/preferences": "^8.0.1",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
     "@ionic/angular": "^9.0.0",
+    "@ionic/pwa-elements": "^3.4.0",
     "ionicons": "^8.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
@@ -30,6 +38,7 @@
     "@angular/cli": "22.2.6",
     "@angular/compiler-cli": "22.2.5",
     "@angular/language-service": "22.2.5",
+    "@capacitor/cli": "^8.6.0",
     "@ionic/angular-toolkit": "^13.0.0",
     "angular-eslint": "22.6.0",
     "eslint": "^10.10.0",
@@ -38,5 +47,5 @@
     "typescript-eslint": "^8.61.0",
     "vitest": "^5.1.0"
   },
-  "description": "An Ionic project"
+  "description": "CampusFix: Campus Maintenance Issue Reporting Prototype"
 }

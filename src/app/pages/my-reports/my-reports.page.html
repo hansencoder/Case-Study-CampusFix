@@ -1,0 +1,202 @@
+<ion-header class="cf-header">
+  <app-brand-header title="CampusFix"></app-brand-header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="cf-page-container reports-container">
+    <section class="cf-stack-xs">
+      <div class="cf-row-between">
+        <h1 class="cf-page-title">My Reports</h1>
+        <span class="count-pill" aria-label="Total reports">{{ reports.length }}</span>
+      </div>
+      <p class="cf-supporting-text">
+        Track the status of your submitted campus requests
+      </p>
+    </section>
+
+    <ion-searchbar
+      class="report-search"
+      placeholder="Search by title, location, or ticket #"
+      [value]="searchQuery"
+      [debounce]="150"
+      (ionInput)="onSearch($any($event).detail.value)"
+      data-testid="report-search"
+    ></ion-searchbar>
+
+    <div class="filter-row" role="tablist" aria-label="Filter reports">
+      <button
+        type="button"
+        class="filter-chip"
+        [class.is-active]="activeFilter === 'all'"
+        (click)="setFilter('all')"
+      >
+        All ({{ reports.length }})
+      </button>
+      <button
+        type="button"
+        class="filter-chip"
+        [class.is-active]="activeFilter === 'saved'"
+        (click)="setFilter('saved')"
+      >
+        In Progress ({{ savedCount }})
+      </button>
+      <button
+        type="button"
+        class="filter-chip"
+        [class.is-active]="activeFilter === 'draft'"
+        (click)="setFilter('draft')"
+      >
+        Pending ({{ draftCount }})
+      </button>
+      <button
+        type="button"
+        class="filter-chip"
+        [class.is-active]="activeFilter === 'urgent'"
+        (click)="setFilter('urgent')"
+      >
+        Urgent ({{ urgentCount }})
+      </button>
+    </div>
+
+    <div class="cf-card strip-card">
+      <span class="cf-icon-circle" aria-hidden="true">
+        <ion-icon name="person-outline"></ion-icon>
+      </span>
+      <div class="cf-stack-xs">
+        <strong class="strip-title">{{ savedCount }} active dispatch currently on-site</strong>
+        <span class="cf-supporting-text">Campus Facilities maintenance queue</span>
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="cf-state-box">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p class="cf-supporting-text">Loading reports...</p>
+      </div>
+    } @else if (loadError) {
+      <div class="cf-banner cf-banner-warning" role="alert">
+        <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+        <div class="cf-stack-sm">
+          <p class="cf-body-text">{{ loadError }}</p>
+          <ion-button
+            size="small"
+            class="cf-btn cf-btn-outline"
+            (click)="loadReports()"
+          >
+            Retry
+          </ion-button>
+        </div>
+      </div>
+    } @else if (filteredReports.length === 0) {
+      <section class="cf-card cf-state-box" aria-label="Empty reports state">
+        <div class="cf-state-icon">
+          <ion-icon name="folder-open-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <h2 class="cf-section-heading">
+          {{ reports.length === 0 ? 'No reports saved yet' : 'No matching reports' }}
+        </h2>
+        <p class="cf-supporting-text">
+          {{
+            reports.length === 0
+              ? 'Submitted maintenance requests will appear here so you can track their details and photos anytime.'
+              : searchQuery
+                ? 'No reports match "' + searchQuery + '". Try a different search.'
+                : 'Try selecting All to view all of your submitted campus requests.'
+          }}
+        </p>
+        <div class="cf-stack-md cf-full-width">
+          <ion-button
+            expand="block"
+            class="cf-btn cf-btn-primary"
+            routerLink="/create-report"
+          >
+            <ion-icon slot="start" name="add-circle-outline" aria-hidden="true"></ion-icon>
+            Report an Issue
+          </ion-button>
+          <ion-button
+            expand="block"
+            class="cf-btn cf-btn-outline"
+            routerLink="/home"
+          >
+            Back to Home
+          </ion-button>
+        </div>
+      </section>
+    } @else {
+      <div class="cf-stack-md">
+        @for (report of filteredReports; track report.id) {
+          <a
+            [routerLink]="['/report-details', report.id]"
+            class="cf-card cf-card-clickable cf-card-link"
+            data-testid="report-list-item"
+          >
+            <div class="cf-row-between">
+              <span class="ticket-cat">
+                {{ report.ticketCode }} • {{ report.category }}
+              </span>
+              <span
+                class="cf-badge"
+                [class.cf-badge-pending]="report.status === 'Draft'"
+                [class.cf-badge-local]="report.status !== 'Draft'"
+              >
+                {{ report.status === 'Draft' ? 'Pending' : 'In Progress' }}
+              </span>
+            </div>
+
+            <div class="cf-row-between">
+              <h2 class="cf-card-heading report-title">{{ report.title }}</h2>
+              <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+            </div>
+
+            <div class="cf-meta-line">
+              <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+              <span>{{ report.location }}</span>
+            </div>
+
+            <div class="cf-card-footer">
+              <span class="cf-meta-line">
+                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+                <span>{{ report.createdAt | date: 'medium' }}</span>
+              </span>
+
+              <span
+                class="footer-note"
+                [class.is-urgent]="report.urgency === 'Urgent'"
+                [class.has-photo]="report.photoPath && report.urgency !== 'Urgent'"
+              >
+                @if (report.status === 'Draft') {
+                  Awaiting assessment
+                } @else if (report.photoPath) {
+                  Photo attached
+                } @else {
+                  Tech Dispatch #04
+                }
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    }
+
+    <section class="cf-card emergency-footer-card" aria-label="Emergency reference">
+      <span class="cf-icon-circle is-warning" aria-hidden="true">
+        <ion-icon name="bulb-outline"></ion-icon>
+      </span>
+      <div class="cf-stack-xs">
+        <h3 class="cf-small-heading">Urgent Facilities Emergency?</h3>
+        <p class="cf-supporting-text">
+          For immediate fire hazards, heavy flooding, or trapped elevators,
+          please contact Facilities Operations directly.
+        </p>
+        <button type="button" class="desk-link-btn" (click)="onStaticEmergencyTap()">
+          <span>Call 24/7 Operations Desk</span>
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+    </section>
+  </div>
+</ion-content>
+
+<ion-footer class="cf-footer-nav">
+  <app-bottom-nav></app-bottom-nav>
+</ion-footer>

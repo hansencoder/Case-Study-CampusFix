@@ -1,13 +1,9 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
+/* Bundled Google Fonts (Manrope & Inter) */
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
@@ -18,20 +14,536 @@
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+body {
+  font-family: var(--cf-font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cf-text-main);
+  background-color: var(--cf-bg-primary);
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+ion-content {
+  --background: var(--cf-bg-primary);
+}
+
+/* Header & Toolbar */
+ion-header.cf-header {
+  box-shadow: none;
+  border-bottom: 1px solid var(--cf-border);
+  background: var(--cf-surface);
+
+  ion-toolbar {
+    --background: var(--cf-surface);
+    --color: var(--cf-text-main);
+    --border-width: 0;
+    --min-height: 56px;
+  }
+
+  ion-title {
+    font-family: var(--cf-font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cf-text-main);
+    letter-spacing: -0.01em;
+  }
+
+  ion-back-button {
+    --color: var(--cf-color-primary);
+    --icon-font-size: 22px;
+    font-family: var(--cf-font-body);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: none;
+
+    &::part(text) {
+      text-transform: none;
+    }
+  }
+}
+
+/* Layout Container (8-pt system) */
+.cf-page-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--cf-space-5) var(--cf-space-5) var(--cf-space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-6);
+}
+
+@media (min-width: 600px) {
+  .cf-page-container {
+    padding: var(--cf-space-6) var(--cf-space-6) var(--cf-space-8);
+  }
+}
+
+/* Typography Hierarchy */
+.cf-page-title {
+  margin: 0;
+  font-family: var(--cf-font-heading);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--cf-text-main);
+  letter-spacing: -0.02em;
+}
+
+.cf-section-heading {
+  margin: 0;
+  font-family: var(--cf-font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cf-text-main);
+  letter-spacing: -0.01em;
+}
+
+.cf-card-heading {
+  margin: 0;
+  font-family: var(--cf-font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--cf-text-main);
+}
+
+.cf-small-heading {
+  margin: 0;
+  font-family: var(--cf-font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--cf-text-main);
+}
+
+.cf-body-text {
+  margin: 0;
+  font-family: var(--cf-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--cf-text-main);
+}
+
+.cf-supporting-text {
+  margin: 0;
+  font-family: var(--cf-font-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--cf-text-secondary);
+}
+
+/* Cards */
+.cf-card {
+  background: var(--cf-surface);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius-lg);
+  padding: var(--cf-space-4);
+  margin: 0;
+  box-shadow: none;
+}
+
+.cf-card-clickable {
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease;
+
+  &:active {
+    background: rgba(195, 204, 213, 0.16);
+    border-color: var(--cf-color-secondary);
+  }
+}
+
+/* Buttons */
+ion-button.cf-btn {
+  --border-radius: var(--cf-radius-md);
+  --box-shadow: none;
+  --padding-start: var(--cf-space-4);
+  --padding-end: var(--cf-space-4);
+  min-height: 48px;
+  margin: 0;
+  font-family: var(--cf-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+ion-button.cf-btn-primary {
+  --background: var(--cf-color-primary);
+  --background-activated: #252940;
+  --background-focused: #252940;
+  --color: #FFFFFF;
+}
+
+ion-button.cf-btn-secondary {
+  --background: var(--cf-color-secondary);
+  --background-activated: #B0BBC6;
+  --color: var(--cf-color-primary);
+}
+
+ion-button.cf-btn-outline {
+  --background: transparent;
+  --background-activated: rgba(195, 204, 213, 0.25);
+  --border-color: var(--cf-color-secondary);
+  --border-style: solid;
+  --border-width: 1px;
+  --color: var(--cf-color-primary);
+}
+
+ion-button.cf-btn-danger-outline {
+  --background: transparent;
+  --background-activated: var(--cf-status-rejected-bg);
+  --border-color: var(--cf-status-rejected-border);
+  --border-style: solid;
+  --border-width: 1px;
+  --color: var(--cf-error);
+}
+
+ion-button.cf-btn[disabled] {
+  --background: var(--cf-disabled-bg);
+  --color: var(--cf-disabled-text);
+  opacity: 1;
+}
+
+/* Form Fields */
+.cf-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.cf-field-label {
+  font-family: var(--cf-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cf-text-main);
+  line-height: 1.3;
+}
+
+.cf-input-box {
+  background: var(--cf-surface);
+  border: 1px solid var(--cf-color-secondary);
+  border-radius: var(--cf-radius-md);
+  min-height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+
+  &:focus-within {
+    border-color: var(--cf-color-primary);
+    box-shadow: 0 0 0 1px var(--cf-color-primary);
+  }
+
+  &.is-invalid {
+    border-color: var(--cf-error);
+
+    &:focus-within {
+      box-shadow: 0 0 0 1px var(--cf-error);
+    }
+  }
+
+  ion-input,
+  ion-select,
+  ion-textarea {
+    --color: var(--cf-text-main);
+    --placeholder-color: var(--cf-text-muted);
+    --placeholder-opacity: 1;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-family: var(--cf-font-body);
+    font-size: 15px;
+    font-weight: 400;
+    width: 100%;
+  }
+
+  ion-select {
+    min-height: 46px;
+  }
+}
+
+.cf-field-error {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--cf-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cf-error);
+
+  ion-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+}
+
+/* Status & Category Badges (Pill 999px) */
+.cf-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cf-space-2);
+}
+
+.cf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--cf-radius-pill);
+  font-family: var(--cf-font-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  border: 1px solid transparent;
+
+  ion-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+}
+
+.cf-badge-category {
+  background: var(--cf-color-primary);
+  color: #FFFFFF;
+}
+
+.cf-badge-local {
+  background: var(--cf-status-local-bg);
+  color: var(--cf-status-local-text);
+  border-color: var(--cf-status-local-border);
+}
+
+.cf-badge-pending {
+  background: var(--cf-status-pending-bg);
+  color: var(--cf-status-pending-text);
+  border-color: var(--cf-status-pending-border);
+}
+
+.cf-badge-progress {
+  background: var(--cf-status-progress-bg);
+  color: var(--cf-status-progress-text);
+  border-color: var(--cf-status-progress-border);
+}
+
+.cf-badge-resolved {
+  background: var(--cf-status-resolved-bg);
+  color: var(--cf-status-resolved-text);
+  border-color: var(--cf-status-resolved-border);
+}
+
+.cf-badge-rejected {
+  background: var(--cf-status-rejected-bg);
+  color: var(--cf-status-rejected-text);
+  border-color: var(--cf-status-rejected-border);
+}
+
+/* Banners / Feedback Containers */
+.cf-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--cf-space-3) var(--cf-space-4);
+  border-radius: var(--cf-radius-md);
+  border: 1px solid var(--cf-notice-border);
+  background: var(--cf-notice-bg);
+  color: var(--cf-text-main);
+  font-family: var(--cf-font-body);
+  font-size: 13px;
+  line-height: 1.45;
+
+  ion-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+}
+
+.cf-banner-warning {
+  background: var(--cf-status-pending-bg);
+  border-color: var(--cf-status-pending-border);
+  color: var(--cf-status-pending-text);
+}
+
+.cf-banner-error {
+  background: var(--cf-status-rejected-bg);
+  border-color: var(--cf-status-rejected-border);
+  color: var(--cf-error);
+}
+
+.cf-banner-success {
+  background: var(--cf-status-resolved-bg);
+  border-color: var(--cf-status-resolved-border);
+  color: var(--cf-success);
+}
+
+/* Footer Safe Wrapper */
+ion-footer.cf-footer-nav {
+  box-shadow: none;
+  border-top: 1px solid var(--cf-border);
+  background: var(--cf-surface);
+}
+
+/* Toast Styling */
+ion-toast.cf-toast-success {
+  --background: var(--cf-success);
+  --color: #FFFFFF;
+  --border-radius: var(--cf-radius-md);
+  --box-shadow: none;
+  font-family: var(--cf-font-body);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+ion-toast.cf-toast-info {
+  --background: var(--cf-color-primary);
+  --color: #FFFFFF;
+  --border-radius: var(--cf-radius-md);
+  --box-shadow: none;
+  font-family: var(--cf-font-body);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Shared Layout & Micro-Component Helpers */
+.cf-stack-xs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-1);
+}
+
+.cf-stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+}
+
+.cf-stack-md {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-3);
+}
+
+.cf-stack-lg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-4);
+}
+
+.cf-row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-2);
+}
+
+.cf-meta-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--cf-text-secondary);
+
+  ion-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+}
+
+.cf-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cf-radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--cf-bg-primary);
+  color: var(--cf-color-primary);
+
+  ion-icon {
+    font-size: 18px;
+  }
+
+  &.is-warning {
+    background: var(--cf-status-pending-bg);
+    color: var(--cf-warning);
+  }
+}
+
+.cf-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cf-radius-pill);
+  border: 1px solid var(--cf-border);
+  background: var(--cf-surface);
+  color: var(--cf-color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.cf-state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--cf-space-3);
+  padding: var(--cf-space-8) var(--cf-space-5);
+}
+
+.cf-state-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--cf-radius-pill);
+  background: var(--cf-notice-bg);
+  color: var(--cf-color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 26px;
+  }
+}
+
+.cf-full-width {
+  width: 100%;
+}
+
+.cf-card-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cf-space-2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cf-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cf-space-2);
+  padding-top: var(--cf-space-2);
+  border-top: 1px solid var(--cf-border);
+}

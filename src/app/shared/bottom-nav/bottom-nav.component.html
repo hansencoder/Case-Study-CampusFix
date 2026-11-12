@@ -1,0 +1,39 @@
+<nav class="cf-bottom-nav" aria-label="Main navigation">
+  <a
+    routerLink="/home"
+    routerLinkActive="is-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="cf-nav-item"
+    data-testid="nav-home"
+  >
+    <span class="cf-nav-icon-wrap">
+      <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
+    </span>
+    <span class="cf-nav-label">Home</span>
+  </a>
+
+  <a
+    routerLink="/create-report"
+    routerLinkActive="is-active"
+    class="cf-nav-item"
+    data-testid="nav-create"
+  >
+    <span class="cf-nav-icon-wrap">
+      <ion-icon name="add-circle-outline" aria-hidden="true"></ion-icon>
+    </span>
+    <span class="cf-nav-label">Report Issue</span>
+  </a>
+
+  <a
+    routerLink="/my-reports"
+    routerLinkActive="is-active"
+    [class.is-active]="isReportsSectionActive"
+    class="cf-nav-item"
+    data-testid="nav-reports"
+  >
+    <span class="cf-nav-icon-wrap">
+      <ion-icon name="clipboard-outline" aria-hidden="true"></ion-icon>
+    </span>
+    <span class="cf-nav-label">My Reports</span>
+  </a>
+</nav>

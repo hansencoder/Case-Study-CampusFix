@@ -1,2 +1,114 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// CampusFix Design System Tokens
+// Brand Palette: #F8F2ED (Primary Background), #C3CCD5 (Secondary), #323653 (Primary Brand)
+
+:root {
+  // Official Brand & UI Colors
+  --cf-bg-primary: #F8F2ED;
+  --cf-color-secondary: #C3CCD5;
+  --cf-color-primary: #323653;
+  --cf-surface: #FFFFFF;
+  --cf-text-main: #323653;
+  --cf-text-secondary: #686D80;
+  --cf-text-muted: #858A99;
+  --cf-border: #E2E3E7;
+
+  // Semantic Status Colors
+  --cf-success: #34745B;
+  --cf-warning: #B7791F;
+  --cf-error: #B54747;
+
+  // Muted Status Badge Surfaces (derived from official palette)
+  --cf-status-local-bg: rgba(195, 204, 213, 0.28);
+  --cf-status-local-text: #323653;
+  --cf-status-local-border: #C3CCD5;
+
+  --cf-status-pending-bg: rgba(183, 121, 31, 0.12);
+  --cf-status-pending-text: #8F5D14;
+  --cf-status-pending-border: rgba(183, 121, 31, 0.35);
+
+  --cf-status-progress-bg: rgba(195, 204, 213, 0.35);
+  --cf-status-progress-text: #323653;
+  --cf-status-progress-border: #C3CCD5;
+
+  --cf-status-resolved-bg: rgba(52, 116, 91, 0.12);
+  --cf-status-resolved-text: #34745B;
+  --cf-status-resolved-border: rgba(52, 116, 91, 0.35);
+
+  --cf-status-rejected-bg: rgba(181, 71, 71, 0.10);
+  --cf-status-rejected-text: #B54747;
+  --cf-status-rejected-border: rgba(181, 71, 71, 0.35);
+
+  // Supporting Container Surfaces
+  --cf-notice-bg: rgba(195, 204, 213, 0.24);
+  --cf-notice-border: #C3CCD5;
+  --cf-disabled-bg: #E2E3E7;
+  --cf-disabled-text: #686D80;
+
+  // Typography
+  --cf-font-heading: 'Manrope', 'Inter', Arial, sans-serif;
+  --cf-font-body: 'Inter', 'Manrope', Arial, sans-serif;
+
+  // Border Radius Scale
+  --cf-radius-xs: 6px;
+  --cf-radius-sm: 10px;
+  --cf-radius-md: 12px;
+  --cf-radius-lg: 16px;
+  --cf-radius-xl: 20px;
+  --cf-radius-2xl: 24px;
+  --cf-radius-pill: 999px;
+
+  // 8-Point Spacing System (4px base unit)
+  --cf-space-1: 4px;
+  --cf-space-2: 8px;
+  --cf-space-3: 12px;
+  --cf-space-4: 16px;
+  --cf-space-5: 20px;
+  --cf-space-6: 24px;
+  --cf-space-8: 32px;
+  --cf-space-10: 40px;
+  --cf-space-12: 48px;
+
+  // Ionic Theme Mapping
+  --ion-font-family: var(--cf-font-body);
+  --ion-background-color: var(--cf-bg-primary);
+  --ion-background-color-rgb: 248, 242, 237;
+  --ion-text-color: var(--cf-text-main);
+  --ion-text-color-rgb: 50, 54, 83;
+  --ion-card-background: var(--cf-surface);
+  --ion-item-background: var(--cf-surface);
+  --ion-toolbar-background: var(--cf-surface);
+  --ion-toolbar-color: var(--cf-text-main);
+  --ion-border-color: var(--cf-border);
+
+  --ion-color-primary: #323653;
+  --ion-color-primary-rgb: 50, 54, 83;
+  --ion-color-primary-contrast: #FFFFFF;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #2B2F48;
+  --ion-color-primary-tint: #474B66;
+
+  --ion-color-secondary: #C3CCD5;
+  --ion-color-secondary-rgb: 195, 204, 213;
+  --ion-color-secondary-contrast: #323653;
+  --ion-color-secondary-contrast-rgb: 50, 54, 83;
+  --ion-color-secondary-shade: #ACB5BE;
+  --ion-color-secondary-tint: #CAD2DA;
+
+  --ion-color-success: #34745B;
+  --ion-color-success-rgb: 52, 116, 91;
+  --ion-color-success-contrast: #FFFFFF;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+
+  --ion-color-warning: #B7791F;
+  --ion-color-warning-rgb: 183, 121, 31;
+  --ion-color-warning-contrast: #FFFFFF;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+
+  --ion-color-danger: #B54747;
+  --ion-color-danger-rgb: 181, 71, 71;
+  --ion-color-danger-contrast: #FFFFFF;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+
+  --ion-color-medium: #686D80;
+  --ion-color-medium-rgb: 104, 109, 128;
+}

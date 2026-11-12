@@ -1,5 +1,7 @@
 {
-  "name": "case study",
-  "integrations": {},
+  "name": "CampusFix",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
